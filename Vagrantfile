@@ -7,7 +7,7 @@
 # you're doing.
 Vagrant.configure(2) do |config|
   config.vm.define "es" do |es|
-    es.vm.box = "ubuntu/trusty64"
+    es.vm.box = "mrlesmithjr/trusty64"
     es.vm.hostname = "es"
 
     es.vm.network :private_network, ip: "192.168.202.202"
@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
     es.vm.provision :shell, inline: 'ansible-playbook -i /vagrant/hosts -c local /vagrant/playbook.yml --limit "es"'
   end
   config.vm.define "logstash" do |logstash|
-    logstash.vm.box = "ubuntu/trusty64"
+    logstash.vm.box = "mrlesmithjr/trusty64"
     logstash.vm.hostname = "logstash"
 
     logstash.vm.network :private_network, ip: "192.168.202.203"
@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
     logstash.vm.provision :shell, inline: 'ansible-playbook -i /vagrant/hosts -c local /vagrant/playbook.yml --limit "logstash"'
   end
   config.vm.define "filebeat" do |filebeat|
-    filebeat.vm.box = "ubuntu/trusty64"
+    filebeat.vm.box = "mrlesmithjr/trusty64"
     filebeat.vm.hostname = "filebeat"
 
     filebeat.vm.network :private_network, ip: "192.168.202.201"
