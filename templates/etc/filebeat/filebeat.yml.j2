@@ -13,6 +13,7 @@ filebeat:
 {%   endfor %}
      encoding: {{ item.encoding|default ('plain') }}
      input_type: {{ item.input_type|default ('log') }}
+     document_type: {{ item.document_type|default ('log') }}
 
 {% endfor %}
 
