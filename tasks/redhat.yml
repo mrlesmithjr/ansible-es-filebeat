@@ -12,8 +12,8 @@
     url: "{{ es_filebeat_dl_url }}/{{ es_filebeat_redhat_package }}"
     dest: "/opt/{{ es_filebeat_redhat_package }}"
 
-- name: debian | installing filebeat
+- name: redhat | installing filebeat
   yum:
-    deb: "/opt/{{ es_filebeat_redhat_package }}"
+    name: "/opt/{{ es_filebeat_redhat_package }}"
     state: "present"
   when: ansible_distribution != "Fedora"
