@@ -1,11 +1,11 @@
 ---
 - name: config_filebeat | configuring filebeat
   template:
-    src: "etc/filebeat/filebeat.yml.j2"
-    dest: "/etc/filebeat/filebeat.yml"
-    owner: "root"
-    group: "root"
-    mode: 0644
+    src: etc/filebeat/filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   notify:
-    - 'restart filebeat'
+    - restart filebeat
   become: true
