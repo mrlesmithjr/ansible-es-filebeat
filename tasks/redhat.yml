@@ -1,22 +1,27 @@
 ---
-- name: redhat | installing pre-reqs
-  yum:
-    name: "{{ item }}"
-    state: "present"
+- name: redhat | Adding filebeat Repo Key
+  rpm_key:
+    key: "{{ es_filebeat_repo_key }}"
+    state: present
   become: true
-  with_items:
-    - 'unzip'
-  when: ansible_distribution != "Fedora"
+  register: result
+  until: result is successful
 
-- name: redhat | downloading filebeat
-  get_url:
-    url: "{{ es_filebeat_dl_url }}/{{ es_filebeat_redhat_package }}"
-    dest: "/opt/{{ es_filebeat_redhat_package }}"
+- name: redhat | Adding filebeat Repo
+  yum_repository:
+    baseurl: "{{ es_filebeat_repo_url+'/'+es_filebeat_major_ver+'/yum' }}"
+    description: "Filebeat repository for {{ es_filebeat_major_ver }} packages"
+    enabled: true
+    gpgcheck: true
+    gpgkey: "{{ es_filebeat_repo_key }}"
+    name: "{{ 'filebeat-'+es_filebeat_major_ver }}"
+    state: present
   become: true
 
-- name: redhat | installing filebeat
-  yum:
-    name: "/opt/{{ es_filebeat_redhat_package }}"
-    state: "present"
+- name: redhat | Installing filebeat
+  package:
+    name: "{{ 'filebeat-'+es_filebeat_minor_version|string }}"
+    state: present
   become: true
-  when: ansible_distribution != "Fedora"
+  register: result
+  until: result is successful

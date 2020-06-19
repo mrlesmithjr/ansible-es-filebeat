@@ -1,1 +1,3 @@
-{{ es_filebeat_config|to_nice_yaml }}
+{{ ansible_managed|comment }}
+
+{{ es_filebeat_configuration|to_nice_yaml }}

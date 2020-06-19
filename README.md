@@ -1,119 +1,42 @@
-Role Name
-=========
+# ansible-es-filebeat
 
-An [Ansible] role to install/configure [Elastic Filebeat]
+Ansible role to install/configure Elastic Filebeat
 
-Requirements
-------------
+## Build Status
 
-None
+### GitHub Actions
 
-Role Variables
---------------
+![Molecule Test](https://github.com/mrlesmithjr/ansible-es-filebeat/workflows/Molecule%20Test/badge.svg)
 
-```
----
-# defaults file for ansible-es-filebeat
-es_filebeat_debian_package: 'filebeat-{{ es_filebeat_version }}-amd64.deb'
-es_filebeat_dl_url: 'https://artifacts.elastic.co/downloads/beats/filebeat'
+### Travis CI
 
-# Define filebeat config per
-# https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration-details.html
-# The config here will be automatically converted to proper YAML for Filebeat
-# /etc/filebeat/filebeat.yml using the Jinja2 template.
-es_filebeat_config:
-  filebeat.prospectors:
-    - paths:
-      - '/var/lib/docker/containers/*/*.log'
-      encoding: 'plain'
-      input_type: 'log'
-      json.add_error_key: true
-      json.keys_under_root: true
-      json.message_key: 'log'
-      document_type: 'docker-logs'
-  logging:
-    level: 'debug'
-    to_files: true
-    to_syslog: false
-    files:
-      path: '/var/log'
-      name: 'filebeat.log'
-      keepfiles: 7
-  output:
-    elasticsearch:
-      hosts:
-      - 'http://192.168.250.14:9200'
-      - 'http://192.168.250.15:9200'
-      index: 'filebeat'
-      template:
-        name: 'filebeat'
-        path: '/etc/filebeat/filebeat.template.json'
-  registry_file: '/var/lib/filebeat/registry'
+[![Build Status](https://travis-ci.org/mrlesmithjr/ansible-es-filebeat.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-es-filebeat)
 
-es_filebeat_redhat_package: 'filebeat-{{ es_filebeat_version }}-x86_64.rpm'
+## Requirements
 
-# Event count spool threshold - forces network flush if exceeded
-es_filebeat_spool_size: 2048
-es_filebeat_version: '5.3.2'
-```
+For any required Ansible roles, review:
+[requirements.yml](requirements.yml)
 
-Dependencies
-------------
+## Role Variables
 
-None
+[defaults/main.yml](defaults/main.yml)
 
-Example Playbook
-----------------
+## Dependencies
 
-```
----
-- hosts: docker_hosts
-  vars:
-    es_filebeat_config:
-      filebeat.prospectors:
-        - paths:
-          - '/var/lib/docker/containers/*/*.log'
-          encoding: 'plain'
-          input_type: 'log'
-          json.add_error_key: true
-          json.keys_under_root: true
-          json.message_key: 'log'
-          document_type: 'docker-logs'
-      logging:
-        level: 'debug'
-        to_files: true
-        to_syslog: false
-        files:
-          path: '/var/log'
-          name: 'filebeat.log'
-          keepfiles: 7
-      output:
-        elasticsearch:
-          hosts:
-          - 'http://192.168.250.14:9200'
-          - 'http://192.168.250.15:9200'
-          index: 'filebeat'
-          template:
-            name: 'filebeat'
-            path: '/etc/filebeat/filebeat.template.json'
-      registry_file: '/var/lib/filebeat/registry'
-  roles:
-    - role: ansible-es-filebeat
-  tasks:
-```
+## Example Playbook
 
-License
--------
+[playbook.yml](playbook.yml)
 
-BSD
+## License
 
-Author Information
-------------------
+MIT
+
+## Author Information
 
 Larry Smith Jr.
-- @mrlesmithjr
-- http://everythingshouldbevirtual.com
-- mrlesmithjr [at] gmail.com
 
-[Ansible]: <https://www.ansible.com>
-[Elastic Filebeat]: <https://www.elastic.co/products/beats/filebeat>
+- [@mrlesmithjr](https://twitter.com/mrlesmithjr)
+- [mrlesmithjr@gmail.com](mailto:mrlesmithjr@gmail.com)
+- [http://everythingshouldbevirtual.com](http://everythingshouldbevirtual.com)
+
+> NOTE: Repo has been created/updated using [https://github.com/mrlesmithjr/cookiecutter-ansible-role](https://github.com/mrlesmithjr/cookiecutter-ansible-role) as a template.

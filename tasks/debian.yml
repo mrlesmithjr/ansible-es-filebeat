@@ -1,14 +1,32 @@
 ---
-- name: debian | installing pre-reqs
+- name: debian | Installing Pre-Reqs
   apt:
-    name: "{{ item }}"
-    state: "present"
+    name:
+      - apt-transport-https
+      - gnupg
+    state: present
   become: true
-  with_items:
-    - 'unzip'
+  register: result
+  until: result is successful
 
-- name: debian | installing filebeat
-  apt:
-    deb: "{{ es_filebeat_dl_url }}/{{ es_filebeat_debian_package }}"
-    state: "present"
+- name: debian | installing filebeat repo key
+  apt_key:
+    url: "{{ es_filebeat_repo_key }}"
+    state: present
   become: true
+  register: result
+  until: result is successful
+
+- name: debian | adding filebeat repo
+  apt_repository:
+    repo: "{{ 'deb '+es_filebeat_repo_url+'/'+es_filebeat_major_ver+'/apt stable main' }}"
+    state: present
+  become: true
+
+- name: debian | Installing filebeat {{ es_filebeat_minor_version }}
+  apt:
+    name: "{{ 'filebeat='+es_filebeat_minor_version|string }}"
+    state: present
+  become: true
+  register: result
+  until: result is successful

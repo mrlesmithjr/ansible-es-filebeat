@@ -1,11 +1,12 @@
 ---
 # tasks file for ansible-es-filebeat
-- include: debian.yml
+- include_tasks: debian.yml
   when: ansible_os_family == "Debian"
 
-- include: redhat.yml
+- include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- include: config_filebeat.yml
+- include_tasks: config_filebeat.yml
+  when: es_filebeat_config|bool
 
-- include: service.yml
+- include_tasks: service.yml
