@@ -9,28 +9,84 @@ es_filebeat_config: false
 # The config here will be automatically converted to proper YAML for Filebeat
 # /etc/filebeat/filebeat.yml using the Jinja2 template.
 es_filebeat_configuration:
-  filebeat.inputs:
-    - type: log
+  filebeat:
+    config:
+      modules:
+        path: ${path.config}/modules.d/*.yml
+      reload:
+        enabled: false
+    inputs:
+      - type: log
+        enabled: false
+        paths:
+          - /var/log/*.log
+
+  logging:
+    level: info
+
+  output:
+    elasticsearch:
+      enabled: true
+      # The list of Elasticsearch nodes to connect to. The events are
+      # distributed to these nodes in round robin order. If one node becomes
+      # unreachable, the event is automatically sent to another node.
+      hosts:
+        - localhost:9200
+      # The name of the protocol Elasticsearch is reachable on.
+      # The options are: http or https.
+      protocol: http
+
+    kafka:
       enabled: false
-      paths:
-        - /var/log/*.log
-  filebeat.config.modules:
-    path: ${path.config}/modules.d/*.yml
-    reload.enabled: false
-  logging.level: debug
-  output.elasticsearch:
-    hosts: ["localhost:9200"]
-  # output.logstash:
-  #   hosts: ["localhost:5044"]
+      # The list of Kafka broker addresses from where to fetch the cluster metadata. The cluster metadata contain the
+      # actual Kafka brokers events are published to.
+      hosts:
+        []
+        # - kafka-01:9092
+        # - kafka-02:9092
+        # - kafka-03:9092
+
+    logstash:
+      enabled: false
+      # The list of known Logstash servers to connect to. If load balancing is
+      # disabled, but multiple hosts are configured, one host is selected
+      # randomly (there is no precedence). If one host becomes unreachable,
+      # another one is selected randomly.
+      hosts:
+        []
+        # - localhost:5044
+      # If set to true and multiple Logstash hosts are configured, the output
+      # plugin load balances published events onto all Logstash hosts.
+      loadbalance: false
+
+    redis:
+      enabled: false
+      # The list of Redis servers to connect to. If load balancing is enabled,
+      # the events are distributed to the servers in the list. If one server
+      # becomes unreachable, the events are distributed to the reachable
+      # servers only.
+      hosts:
+        []
+        # - localhost
+      # If set to true and multiple hosts or workers are configured, the output
+      # plugin load balances published events onto all Redis hosts.
+      loadbalance: true
+
   processors:
     - add_host_metadata: ~
     - add_cloud_metadata: ~
     - add_docker_metadata: ~
     - add_kubernetes_metadata: ~
-  setup.template.settings:
-    index.number_of_shards: 1
-  setup.kibana:
-    # host: localhost:5601
+
+  setup:
+    template:
+      # Set to false to disable template loading. If set this to false,
+      # you must load the template manually.
+      enabled: true
+
+    kibana:
+      host: localhost:5601
+      protocol: http
 
 es_filebeat_repo_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 es_filebeat_repo_url: https://artifacts.elastic.co/packages
