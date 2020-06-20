@@ -1,3 +1,32 @@
+commit 90e9304b92ab3b8418139b9fb1f4b568c715b277
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Sat Jun 20 18:10:45 2020 -0400
+
+    Cleaned up default vars
+    
+    - Cleaned up formatting of default vars
+    - Added additional output examples
+    - Added config: true for Molecule testing to ensure that the
+      configuration format is correct.
+
+commit a47449fd1aa09cc4cc97530bb0b6803a3e4ae9d7
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jun 19 09:42:54 2020 -0400
+
+    Fixing BS GPG Issue
+    
+    https://discuss.elastic.co/t/official-apt-repository-451-unavailable-for-legal-reasons/232494
+
+commit b09ceb30bead9e42488b985ae9c6af8dcd77f58e
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jun 19 00:59:57 2020 -0400
+
+    Refactored tasks, vars, etc.
+    
+    - Updated to 7.8.0
+    - Cleaned up configuration var
+    - Cleaned up Debian and RedHat installs
+
 commit 46d075c60263a2bd6a7f930572b62265e5eec340
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Fri Jun 19 00:09:37 2020 -0400

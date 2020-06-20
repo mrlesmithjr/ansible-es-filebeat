@@ -6,7 +6,7 @@
 - include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- include_tasks: config_filebeat.yml
+- include_tasks: config.yml
   when: es_filebeat_config|bool
 
 - include_tasks: service.yml
