@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    es_filebeat_config: true
   tasks:
     - name: Include ansible-es-filebeat
       include_role:
