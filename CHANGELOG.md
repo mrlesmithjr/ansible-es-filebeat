@@ -1,3 +1,9 @@
+commit 9ace58d05a78bf483cfe98f0365c19c1037b8af4
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Sat Jun 20 20:49:35 2020 -0400
+
+    Added additional default vars for example
+
 commit 798036f6dc34ded33d7d9b56c18ebaa998f07ef7
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Jun 20 18:51:54 2020 -0400
