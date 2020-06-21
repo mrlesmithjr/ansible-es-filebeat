@@ -72,13 +72,21 @@ es_filebeat_configuration:
       # plugin load balances published events onto all Redis hosts.
       loadbalance: true
 
+  # You can use processors to filter and enhance data before sending it to the
+  # configured output
   processors:
-    - add_host_metadata: ~
     - add_cloud_metadata: ~
     - add_docker_metadata: ~
+    - add_host_metadata: ~
     - add_kubernetes_metadata: ~
 
   setup:
+    # If this option is set to true, Filebeat loads the sample Kibana
+    # dashboards from the local kibana directory in the home path of the
+    # Filebeat installation
+    dashboards:
+      enabled: true
+
     template:
       # Set to false to disable template loading. If set this to false,
       # you must load the template manually.

@@ -1,3 +1,9 @@
+commit 798036f6dc34ded33d7d9b56c18ebaa998f07ef7
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Sat Jun 20 18:51:54 2020 -0400
+
+    Renamed task config_filebeat to config
+
 commit 90e9304b92ab3b8418139b9fb1f4b568c715b277
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Jun 20 18:10:45 2020 -0400
